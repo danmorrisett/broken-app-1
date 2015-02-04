@@ -8,7 +8,7 @@ class ContactsController < ApplicationController
   def show
   end
 
-  def mew
+  def new
     @contact = Contact.new
   end
 
@@ -20,13 +20,13 @@ class ContactsController < ApplicationController
 
     if @contact.save
       redirect_to @contact, notice: 'Contact was successfully created.'
-      render :show, status: :created, location: @contact
+      # :show, status: :created, location: @contact
     else
       render :new
     end
   end
 
-  def destroy
+  def update
     if @contact.update(contact_params)
       redirect_to @contact, notice: 'Contact was successfully updated.'
     else
@@ -34,9 +34,10 @@ class ContactsController < ApplicationController
     end
   end
 
-  def update
+  def destroy
     @contact.destroy
-    redirect_to contacts_url, notice: 'Contact was successfully destroyed.'
+    redirect_to contacts_url, notice: 'Contact was successfully DEMOLISHED.'
+
   end
 
   def new
@@ -49,9 +50,6 @@ class ContactsController < ApplicationController
     end
 
     def contact_params
-      params[:contact][:email].reverse!
-      params[:contact][:name].reverse!
-      params[:contact][:notes].reverse!
       params.require(:contact).permit(:name, :email, :notes)
     end
 end
